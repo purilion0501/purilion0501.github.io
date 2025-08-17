@@ -15,20 +15,33 @@
     <meta property="og:image" content="https://purilion0501.github.io/og-image.png" />
     <link rel="icon" href="/favicon.ico" />
 
-    <!-- Tailwind CSS CDN (适合单文件快速上线) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // 自定义 Tailwind 主题
+      // 科技风主题配置
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              brand: {
-                50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e'
+              primary: '#0ea5e9', // 科技蓝主色
+              secondary: '#14b8a6', // 辅助色-青绿色
+              dark: {
+                900: '#0f172a',
+                800: '#1e293b',
+                700: '#334155'
+              },
+              light: {
+                100: '#f8fafc',
+                200: '#e2e8f0'
               }
             },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
             boxShadow: {
-              soft: '0 10px 30px -12px rgba(0,0,0,.12)'
+              'tech': '0 4px 20px rgba(14, 165, 233, 0.15)',
+              'tech-hover': '0 8px 30px rgba(14, 165, 233, 0.25)',
+              'inner-glow': 'inset 0 0 10px rgba(14, 165, 233, 0.3)'
             }
           }
         },
@@ -36,14 +49,39 @@
       };
     </script>
 
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .text-gradient {
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .grid-pattern {
+          background-image: 
+            linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+          background-size: 20px 20px;
+        }
+        .neon-border {
+          box-shadow: 0 0 5px theme('colors.primary'), 0 0 0 1px theme('colors.primary/30');
+        }
+      }
+    </style>
+
     <style>
-      /* 平滑出现动画 */
+      /* 动画效果 */
       .fade-in { animation: fadeIn .8s ease-out both; }
       @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+      
+      .pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+      
+      .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+      .hover-lift:hover { transform: translateY(-3px); }
     </style>
 
     <script>
-      // 读取/设置暗色模式
+      // 暗色模式设置
       (function () {
         const saved = localStorage.getItem('theme');
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -53,56 +91,63 @@
       })();
     </script>
   </head>
-  <body class="bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200">
-    <!-- 顶部导航 -->
-    <header class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-900/60">
+  <body class="bg-light-100 text-dark-900 dark:bg-dark-900 dark:text-light-100 transition-colors duration-300">
+    <!-- 顶部导航 - 半透明玻璃态 -->
+    <header class="sticky top-0 z-30 backdrop-blur-lg bg-light-100/80 dark:bg-dark-900/80 border-b border-light-200/50 dark:border-dark-700/50">
       <nav class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-        <a href="#home" class="font-semibold tracking-tight text-slate-900 dark:text-white">你的名字</a>
+        <a href="#home" class="font-semibold tracking-tight text-xl flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-primary pulse-slow"></span>
+          <span>ZYL</span>
+        </a>
         <div class="hidden md:flex gap-6 text-sm">
-          <a href="#projects" class="hover:text-brand-600 dark:hover:text-brand-300">项目</a>
-          <a href="#about" class="hover:text-brand-600 dark:hover:text-brand-300">关于我</a>
-          <a href="#blog" class="hover:text-brand-600 dark:hover:text-brand-300">文章</a>
-          <a href="#contact" class="hover:text-brand-600 dark:hover:text-brand-300">联系</a>
+          <a href="#projects" class="hover:text-primary transition-colors">项目</a>
+          <a href="#about" class="hover:text-primary transition-colors">关于我</a>
+          <a href="#blog" class="hover:text-primary transition-colors">文章</a>
+          <a href="#contact" class="hover:text-primary transition-colors">联系</a>
         </div>
         <div class="flex items-center gap-3">
-          <a href="https://github.com/your-username" target="_blank" class="inline-flex items-center gap-2 text-xs md:text-sm px-3 py-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+          <a href="https://github.com/your-username" target="_blank" class="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-xl bg-light-200 dark:bg-dark-800 hover:bg-primary hover:text-white transition-all">
             <!-- GitHub 图标 -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.35-1.78-1.35-1.78-1.1-.75.09-.73.09-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.84 1.32 3.53 1.01.11-.78.42-1.32.76-1.62-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.16 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.64.25 2.86.12 3.16.77.84 1.24 1.91 1.24 3.22 0 4.62-2.8 5.65-5.47 5.95.43.37.81 1.1.81 2.23v3.3c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
             <span>GitHub</span>
           </a>
-          <button id="themeToggle" class="text-xs md:text-sm px-3 py-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">🌙/☀️</button>
+          <button id="themeToggle" class="w-9 h-9 rounded-full flex items-center justify-center bg-light-200 dark:bg-dark-800 hover:bg-primary hover:text-white transition-all">
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
+          </button>
         </div>
       </nav>
     </header>
 
-    <!-- Hero -->
-    <section id="home" class="mx-auto max-w-6xl px-4 py-16 md:py-24">
-      <div class="grid md:grid-cols-2 items-center gap-8">
+    <!-- Hero 区域 - 带网格背景 -->
+    <section id="home" class="mx-auto max-w-6xl px-4 py-16 md:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 grid-pattern opacity-50 dark:opacity-30"></div>
+      <div class="grid md:grid-cols-2 items-center gap-8 relative">
         <div class="fade-in">
-          <span class="inline-flex items-center gap-2 text-xs font-medium px-3 py-1 rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-200">
-            <span class="inline-block w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-            开源爱好者 · 全栈/算法/移动 自己改
+          <span class="inline-flex items-center gap-2 text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">
+            <span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            开源爱好者 · 全栈/算法/移动开发者
           </span>
-          <h1 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
-            你好，我是 <span class="text-brand-600">ZYL</span> 👋
+          <h1 class="mt-4 text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+            你好，我是 <span class="bg-gradient-to-r from-primary to-secondary text-gradient">ZYL</span> 👋
           </h1>
-          <p class="mt-4 text-slate-600 dark:text-slate-300">
+          <p class="mt-4 text-slate-600 dark:text-slate-300 max-w-md">
             我热衷于把想法打磨成优雅、可靠且可维护的产品。这里是我在 GitHub 上的作品与笔记精选。
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href="#projects" class="px-5 py-2.5 rounded-2xl bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition">查看项目</a>
-            <a href="#contact" class="px-5 py-2.5 rounded-2xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition">联系我</a>
+            <a href="#projects" class="px-5 py-2.5 rounded-xl bg-primary text-white shadow-tech hover:shadow-tech-hover hover:bg-primary/90 transition-all">查看项目</a>
+            <a href="#contact" class="px-5 py-2.5 rounded-xl bg-light-200 dark:bg-dark-800 hover:bg-light-200/80 dark:hover:bg-dark-700 transition-all">联系我</a>
           </div>
           <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
-            <span class="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800">JavaScript/TypeScript</span>
-            <span class="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800">Python</span>
-            <span class="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800">Go</span>
-            <span class="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800">React · Node · Docker</span>
+            <span class="px-2 py-1 rounded-full bg-light-200/50 dark:bg-dark-800/50">JavaScript/TypeScript</span>
+            <span class="px-2 py-1 rounded-full bg-light-200/50 dark:bg-dark-800/50">Python</span>
+            <span class="px-2 py-1 rounded-full bg-light-200/50 dark:bg-dark-800/50">Go</span>
+            <span class="px-2 py-1 rounded-full bg-light-200/50 dark:bg-dark-800/50">React · Node · Docker</span>
           </div>
         </div>
-        <div class="relative fade-in">
-          <div class="aspect-square w-64 md:w-80 mx-auto rounded-2xl bg-gradient-to-br from-brand-200 to-brand-500/30 dark:from-brand-700/40 dark:to-brand-900/30 p-1">
-            <img src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="头像占位" class="w-full h-full object-cover rounded-2xl ring-1 ring-white/40 dark:ring-black/20"/>
+        <div class="relative fade-in" style="animation-delay: 0.2s">
+          <div class="aspect-square w-64 md:w-80 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/30 dark:to-secondary/30 p-1.5 neon-border">
+            <img src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="头像占位" class="w-full h-full object-cover rounded-xl"/>
           </div>
           <p class="mt-3 text-center text-xs text-slate-500">把上面图片换成你的头像（/images/avatar.jpg）</p>
         </div>
@@ -110,14 +155,16 @@
     </section>
 
     <!-- 项目 -->
-    <section id="projects" class="bg-slate-50 dark:bg-slate-950/30 border-y border-slate-100 dark:border-slate-800">
+    <section id="projects" class="bg-light-200/30 dark:bg-dark-800/30 border-y border-light-200 dark:border-dark-700">
       <div class="mx-auto max-w-6xl px-4 py-16">
         <div class="flex items-end justify-between gap-4">
           <div>
             <h2 class="text-2xl md:text-3xl font-bold">精选项目</h2>
             <p class="mt-1 text-sm text-slate-500">展示 3–6 个代表作。可手动编辑下方 JSON。</p>
           </div>
-          <a href="https://github.com/purilion0501?tab=repositories" target="_blank" class="text-sm text-brand-700 hover:underline">更多 →</a>
+          <a href="https://github.com/purilion0501?tab=repositories" target="_blank" class="text-sm text-primary hover:underline flex items-center gap-1">
+            更多 <span>→</span>
+          </a>
         </div>
 
         <div id="projectGrid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -139,15 +186,18 @@
           </ul>
         </div>
         <div class="md:col-span-2">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
-            <h3 class="font-semibold">快速信息</h3>
-            <dl class="mt-3 text-sm space-y-2 text-slate-600 dark:text-slate-300">
+          <div class="rounded-xl border border-light-200 dark:border-dark-700 p-5 bg-white/50 dark:bg-dark-800/50 hover-lift">
+            <h3 class="font-semibold flex items-center gap-2">
+              <span class="w-1.5 h-4 bg-primary rounded-full"></span>
+              快速信息
+            </h3>
+            <dl class="mt-3 text-sm space-y-3 text-slate-600 dark:text-slate-300">
               <div class="flex justify-between"><dt>坐标</dt><dd>🌏 你的城市</dd></div>
               <div class="flex justify-between"><dt>状态</dt><dd>🧑‍💻 可接合作</dd></div>
-              <div class="flex justify-between"><dt>邮箱</dt><dd><a class="underline hover:no-underline" href="mailto:you@example.com">you@example.com</a></dd></div>
+              <div class="flex justify-between"><dt>邮箱</dt><dd><a class="text-primary hover:underline" href="mailto:you@example.com">you@example.com</a></dd></div>
               <div class="flex justify-between"><dt>社媒</dt><dd class="space-x-2">
-                <a class="underline hover:no-underline" href="https://twitter.com/your-id" target="_blank">Twitter</a>
-                <a class="underline hover:no-underline" href="https://www.linkedin.com/in/your-id" target="_blank">LinkedIn</a>
+                <a class="text-primary hover:underline" href="https://twitter.com/your-id" target="_blank">Twitter</a>
+                <a class="text-primary hover:underline" href="https://www.linkedin.com/in/your-id" target="_blank">LinkedIn</a>
               </dd></div>
             </dl>
           </div>
@@ -156,14 +206,16 @@
     </section>
 
     <!-- 博客/文章 -->
-    <section id="blog" class="bg-slate-50 dark:bg-slate-950/30 border-y border-slate-100 dark:border-slate-800">
+    <section id="blog" class="bg-light-200/30 dark:bg-dark-800/30 border-y border-light-200 dark:border-dark-700">
       <div class="mx-auto max-w-6xl px-4 py-16">
         <div class="flex items-end justify-between gap-4">
           <div>
             <h2 class="text-2xl md:text-3xl font-bold">最新文章</h2>
             <p class="mt-1 text-sm text-slate-500">可改为你喜欢的博客平台链接或手动列表。</p>
           </div>
-          <a href="/blog" class="text-sm text-brand-700 hover:underline">全部文章 →</a>
+          <a href="/blog" class="text-sm text-primary hover:underline flex items-center gap-1">
+            全部文章 <span>→</span>
+          </a>
         </div>
         <div class="mt-8 grid md:grid-cols-3 gap-6" id="postGrid"></div>
       </div>
@@ -175,33 +227,39 @@
         <div>
           <h2 class="text-2xl md:text-3xl font-bold">联系我</h2>
           <p class="mt-3 text-slate-600 dark:text-slate-300">欢迎就合作、内推、开源共建等话题交流。</p>
-          <div class="mt-6 rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
+          <div class="mt-6 rounded-xl border border-light-200 dark:border-dark-700 p-6 bg-white/50 dark:bg-dark-800/50 hover-lift">
             <form action="mailto:you@example.com" method="post" enctype="text/plain" class="space-y-4">
-              <input name="name" required placeholder="你的名字" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring focus:ring-brand-200" />
-              <input type="email" name="email" required placeholder="邮箱" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring focus:ring-brand-200" />
-              <textarea name="message" rows="5" placeholder="想对我说的话…" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring focus:ring-brand-200"></textarea>
-              <button class="px-5 py-2.5 rounded-2xl bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition">发送</button>
+              <input name="name" required placeholder="你的名字" class="w-full px-4 py-2.5 rounded-lg bg-white dark:bg-dark-900 border border-light-200 dark:border-dark-700 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
+              <input type="email" name="email" required placeholder="邮箱" class="w-full px-4 py-2.5 rounded-lg bg-white dark:bg-dark-900 border border-light-200 dark:border-dark-700 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
+              <textarea name="message" rows="5" placeholder="想对我说的话…" class="w-full px-4 py-2.5 rounded-lg bg-white dark:bg-dark-900 border border-light-200 dark:border-dark-700 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"></textarea>
+              <button class="px-5 py-2.5 rounded-xl bg-primary text-white shadow-tech hover:shadow-tech-hover hover:bg-primary/90 transition-all">发送</button>
             </form>
             <p class="mt-3 text-xs text-slate-500">更可靠：把邮箱改为你的真实地址，或改为后端表单服务。</p>
           </div>
         </div>
         <div class="space-y-4">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
-            <h3 class="font-semibold">也可以通过</h3>
-            <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
-              <li>📮 Email：<a class="underline" href="mailto:you@example.com">you@example.com</a></li>
+          <div class="rounded-xl border border-light-200 dark:border-dark-700 p-6 bg-white/50 dark:bg-dark-800/50 hover-lift">
+            <h3 class="font-semibold flex items-center gap-2">
+              <span class="w-1.5 h-4 bg-primary rounded-full"></span>
+              也可以通过
+            </h3>
+            <ul class="mt-3 space-y-3 text-slate-600 dark:text-slate-300">
+              <li>📮 Email：<a class="text-primary hover:underline" href="mailto:you@example.com">you@example.com</a></li>
               <li>💬 微信/Telegram：your-handle</li>
-              <li>🐙 GitHub：<a class="underline" href="https://purilion0501" target="_blank">@purilion0501</a></li>
+              <li>🐙 GitHub：<a class="text-primary hover:underline" href="https://purilion0501" target="_blank">@purilion0501</a></li>
             </ul>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
-            <h3 class="font-semibold">状态面板</h3>
+          <div class="rounded-xl border border-light-200 dark:border-dark-700 p-6 bg-white/50 dark:bg-dark-800/50 hover-lift">
+            <h3 class="font-semibold flex items-center gap-2">
+              <span class="w-1.5 h-4 bg-primary rounded-full"></span>
+              状态面板
+            </h3>
             <p class="mt-2 text-sm text-slate-500">可嵌入 GitHub Stats / 贡献图 / Wakatime 等小挂件。</p>
             <div class="mt-3 grid sm:grid-cols-2 gap-3 text-sm">
-              <a class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800" href="https://github.com/anuraghazra/github-readme-stats" target="_blank">
+              <a class="block rounded-lg overflow-hidden border border-light-200 dark:border-dark-700 hover:border-primary transition-colors" href="https://github.com/anuraghazra/github-readme-stats" target="_blank">
                 <img alt="GitHub stats" src="https://github-readme-stats.vercel.app/api?username=purilion0501&show_icons=true&theme=transparent"/>
               </a>
-              <a class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800" href="https://github.com/ryo-ma/github-profile-trophy" target="_blank">
+              <a class="block rounded-lg overflow-hidden border border-light-200 dark:border-dark-700 hover:border-primary transition-colors" href="https://github.com/ryo-ma/github-profile-trophy" target="_blank">
                 <img alt="GitHub trophies" src="https://github-profile-trophy.vercel.app/?username=purilion0501&theme=onestar&column=3&margin-w=10&margin-h=10"/>
               </a>
             </div>
@@ -211,13 +269,13 @@
     </section>
 
     <!-- 页脚 -->
-    <footer class="border-t border-slate-100 dark:border-slate-800 py-10">
+    <footer class="border-t border-light-200 dark:border-dark-700 py-10">
       <div class="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
         <p>© <span id="year"></span> ZYL. Built with ❤️ & GitHub Pages.</p>
-        <div class="flex items-center gap-4">
-          <a href="https://github.com/purilion0501" target="_blank" class="hover:underline">GitHub</a>
-          <a href="/rss.xml" class="hover:underline">RSS</a>
-          <a href="#" id="backToTop" class="hover:underline">回到顶部 ↑</a>
+        <div class="flex items-center gap-6">
+          <a href="https://github.com/purilion0501" target="_blank" class="hover:text-primary transition-colors">GitHub</a>
+          <a href="/rss.xml" class="hover:text-primary transition-colors">RSS</a>
+          <a href="#" id="backToTop" class="hover:text-primary transition-colors">回到顶部 ↑</a>
         </div>
       </div>
     </footer>
@@ -258,24 +316,28 @@
       // 渲染项目卡片
       const grid = document.getElementById('projectGrid');
       grid.innerHTML = PROJECTS.map(p => `
-        <a href="${p.href}" target="_blank" class="group block rounded-2xl border border-slate-200 dark:border-slate-800 p-5 bg-white/70 dark:bg-slate-900/70 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-soft transition">
+        <a href="${p.href}" target="_blank" class="group block rounded-xl border border-light-200 dark:border-dark-700 p-5 bg-white/50 dark:bg-dark-800/50 hover:border-primary shadow-tech/50 hover:shadow-tech-hover transition-all hover-lift">
           <div class="flex items-start justify-between">
             <h3 class="font-semibold text-lg">${p.name}</h3>
-            <span class="text-xs px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800">⭐ ${p.stars}</span>
+            <span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">⭐ ${p.stars}</span>
           </div>
           <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">${p.desc}</p>
-          <div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-500">${p.tags.map(t=>`<span class=\"px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800\">${t}</span>`).join('')}</div>
-          <div class="mt-4 text-sm text-brand-700 group-hover:underline">查看项目 →</div>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-500">${p.tags.map(t=>`<span class=\"px-2 py-1 rounded-full bg-light-200/50 dark:bg-dark-800/50\">${t}</span>`).join('')}</div>
+          <div class="mt-4 text-sm text-primary group-hover:underline flex items-center gap-1">
+            查看项目 <span>→</span>
+          </div>
         </a>
       `).join('');
 
       // 渲染文章
       const postGrid = document.getElementById('postGrid');
       postGrid.innerHTML = POSTS.map(p => `
-        <a href="${p.href}" class="block rounded-2xl border border-slate-200 dark:border-slate-800 p-5 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-soft transition">
+        <a href="${p.href}" class="block rounded-xl border border-light-200 dark:border-dark-700 p-5 bg-white/50 dark:bg-dark-800/50 hover:border-primary shadow-tech/50 hover:shadow-tech-hover transition-all hover-lift">
           <time class="text-xs text-slate-500">${new Date(p.date).toLocaleDateString()}</time>
           <h3 class="mt-2 font-semibold">${p.title}</h3>
-          <div class="mt-3 text-sm text-brand-700">阅读全文 →</div>
+          <div class="mt-3 text-sm text-primary flex items-center gap-1">
+            阅读全文 <span>→</span>
+          </div>
         </a>
       `).join('');
 
@@ -289,7 +351,25 @@
 
       // 年份与回到顶部
       document.getElementById('year').textContent = new Date().getFullYear();
-      document.getElementById('backToTop').addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      document.getElementById('backToTop').addEventListener('click', e => { 
+        e.preventDefault(); 
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+      });
+
+      // 滚动时的渐显动画
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('fade-in');
+            }
+          });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section > div > div').forEach(el => {
+          observer.observe(el);
+        });
+      });
     </script>
   </body>
 </html>
