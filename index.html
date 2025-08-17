@@ -111,8 +111,8 @@
             <span>My GitHub Homepage</span>
           </a>
           <button id="themeToggle" class="w-9 h-9 rounded-full flex items-center justify-center bg-light-200 dark:bg-dark-800 hover:bg-primary hover:text-white transition-all">
-            <span class="dark:inline">🌙</span>
-            <span class="hidden dark:hidden">☀️</span>
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
           </button>
         </div>
       </nav>
@@ -173,7 +173,6 @@
         <div class="mt-8 space-y-6">
       <!-- 竞赛成果列表 -->
       <div class="rounded-xl border border-light-200 dark:border-dark-700 p-6 bg-white/50 dark:bg-dark-800/50 hover-lift">
-        <h3 class="font-semibold text-lg mb-4">竞赛成果</h3>
         <ul class="space-y-4">
           <li class="flex gap-3">
             <span class="mt-1 text-primary">•</span>
@@ -206,12 +205,17 @@
     </section>
 
     <!-- 科研经历 -->
-    <section id="blog" class="bg-light-200/30 dark:bg-dark-800/30 border-y border-light-200 dark:border-dark-700">
+     <section id="blog" class="bg-light-200/30 dark:bg-dark-800/30 border-y border-light-200 dark:border-dark-700">
       <div class="mx-auto max-w-6xl px-4 py-16">
         <div class="flex items-end justify-between gap-4">
           <div>
             <h2 class="text-2xl md:text-3xl font-bold">科研经历</h2>
-            <ul class="space-y-4">
+          </div>
+        </div>
+        <div class="mt-8 space-y-6">
+      <!-- 竞赛成果列表 -->
+      <div class="rounded-xl border border-light-200 dark:border-dark-700 p-6 bg-white/50 dark:bg-dark-800/50 hover-lift">
+        <ul class="space-y-4">
           <li class="flex gap-3">
             <span class="mt-1 text-primary">•</span>
             <div>
@@ -237,13 +241,12 @@
             <div>
               <h4 class="font-medium">未来规划</h4>
               <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">希望可以在大三提升自己的科研能力和实践能力，最好能够在大三结束前发一篇论文</p>
-              <p class="text-xs text-slate-500 mt-1">2025年8月-？？</p>
+              <p class="text-xs text-slate-500 mt-1">2025年8月-</p>
             </div>
           </li>
         </ul>
-          </div>
-        </div>
-        <div class="mt-8 grid md:grid-cols-3 gap-6" id="postGrid"></div>
+      </div>
+        <div id="projectGrid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
       </div>
     </section>
 
